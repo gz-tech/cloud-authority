@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphone.cloudplatform.authority.mybatis.mapper.SysPermissionMapper">
+
+    <select id="getListByUserIdAndTypes"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysPermissionPo">
+        select sp.* from sys_permission sp
+        inner join sys_role_permission srp on srp.permission_id = sp.id
+        inner join sys_role_user sru on srp.role_type = sru.role_type
+        where sru.user_id = #{userId}
+        <if test="systemId != null and systemId != ''">
+            and sru.system_id = #{systemId}
+        </if>
+        <if test="types != null and types.size() > 0">
+            and sp.res_type in
+            <foreach collection="types" item="type" separator="," open="(" close=")">
+                #{type}
+            </foreach>
+        </if>
+        and sru.del_flag = 0
+        and srp.del_flag = 0
+        and sp.del_flag = 0
+    </select>
+</mapper>

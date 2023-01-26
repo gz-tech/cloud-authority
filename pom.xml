@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>cloud-authority</artifactId>
+    <version>${revision}</version>
+    <modules>
+        <module>cloud-authority-web</module>
+        <module>cloud-authority-repository</module>
+        <module>cloud-authority-common</module>
+        <module>cloud-authority-business</module>
+        <module>cloud-authority-admin-api</module>
+        <module>cloud-authority-open-api</module>
+        <module>cloud-authority-open-starter</module>
+    </modules>
+
+    <packaging>pom</packaging>
+    <name>cloud-authority</name>
+    <description>Internal Authorities Management</description>
+
+    <parent>
+        <groupId>com.upuphone.cloudplatform</groupId>
+        <artifactId>cloudplatform-parent</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <revision>1.0-SNAPSHOT</revision>
+        <orika.version>1.5.4</orika.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <jasypt.version>3.0.4</jasypt.version>
+        <lunar.version>1.2.19</lunar.version>
+        <internal.admin>1.0.0-SNAPSHOT</internal.admin>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.upuphone.cloudplatform</groupId>
+                <artifactId>cloud-authority-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.upuphone.cloudplatform</groupId>
+                <artifactId>cloud-authority-repository</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.upuphone.cloudplatform</groupId>
+                <artifactId>cloud-authority-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.upuphone.cloudplatform</groupId>
+                <artifactId>cloud-authority-business</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.upuphone.cloudplatform</groupId>
+                <artifactId>cloud-authority-admin-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.upuphone.cloudplatform</groupId>
+                <artifactId>cloud-authority-open-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- 3rd party -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>${orika.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.upuphone.cloudplatform</groupId>
+                <artifactId>cloud-internal-admin-starter</artifactId>
+                <version>${internal.admin}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+</project>

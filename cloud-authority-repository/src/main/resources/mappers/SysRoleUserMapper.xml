@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphone.cloudplatform.authority.mybatis.mapper.SysRoleUserMapper">
+
+    <select id="selectDevelopersBySystemId"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysRoleUserPo">
+        SELECT id,user_id
+        FROM sys_role_user as usr
+        <where>
+            system_id = #{systemId}
+            AND usr.del_flag = 0
+        </where>
+    </select>
+
+    <update id="updateByUserId" >
+        update sys_role_user sru
+        set user_id = #{ownerId}
+        <where>
+            system_id = #{id}
+            AND role_type = 1
+            AND del_flag = 0
+        </where>
+    </update>
+
+    <select id="selectOwnerId" resultType="java.lang.String">
+        SELECT distinct user_id
+        FROM sys_role_user
+        <where>
+            system_id =
+            (select id from sys_system where code = #{code} and name = #{name})
+            AND role_type = 2
+            AND del_flag = 0
+        </where>
+    </select>
+
+    <select id="selectOwnerIdList" resultType="java.lang.String">
+        SELECT distinct user_id
+        FROM sys_role_user
+        <where>
+            system_id = #{systemId}
+            AND role_type = 2
+            AND del_flag = 0
+        </where>
+    </select>
+
+    <select id="selectDevelopersBySystemIdAndOperator"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysRoleUserPo">
+        SELECT distinct user_id
+        FROM sys_role_user as usr
+        <where>
+            system_id = #{systemId}
+            <if test="operator !=null and operator !=''">
+                AND user_id = #{operator}
+            </if>
+            AND usr.del_flag = 0
+            AND role_type = 2
+        </where>
+    </select>
+
+</mapper>

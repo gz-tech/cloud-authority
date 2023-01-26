@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphone.cloudplatform.authority.mybatis.mapper.SysUserMapper">
+
+    <select id="selectDevelopersBySystemId"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysUserPo">
+        SELECT usr.id as id, usr.uid as uid, usr.`name` as `name`, usr.mobile as mobile, usr.email as email
+        FROM sys_user as usr
+        RIGHT JOIN sys_user_resource as user_resource on usr.id = user_resource.user_id
+        <where>
+            user_resource.resource_id = #{resourceId}
+            AND user_resource.relation_type = #{relationType}
+            <if test="email !=null and email !=''">
+                AND usr.email LIKE CONCAT('%',#{email},'%')
+            </if>
+            <if test="name !=null and name !=''">
+                AND usr.name LIKE CONCAT('%',#{name},'%')
+            </if>
+            AND user_resource.del_flag = 0
+            AND usr.del_flag = 0
+            AND usr.blocked = 0
+        </where>
+    </select>
+</mapper>

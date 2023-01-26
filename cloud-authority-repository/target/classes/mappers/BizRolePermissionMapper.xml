@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphone.cloudplatform.authority.mybatis.mapper.BizRolePermissionMapper">
+
+    <select id="getAuthorizedList" resultType="com.upuphone.cloudplatform.authority.mybatis.po.bizpermission.AuthorizedRoleListPo">
+        select
+        br.id as authRoleId,
+        br.code as authRoleCode,
+        max(brp.update_time) as updateTime
+        from biz_role_permission brp
+        inner join biz_role br on brp.role_id = br.id
+        where br.system_id = #{systemId, jdbcType = BIGINT}
+        and brp.del_flag = 0 and br.del_flag = 0
+        group by  br.id
+    </select>
+
+    <update id="deleteByResourceId" >
+        update biz_role_permission brp
+        set brp.del_flag = UNIX_TIMESTAMP()
+        where brp.permission_id in
+        (select id from biz_permission where res_id = #{resourceId, jdbcType = BIGINT})
+    </update>
+</mapper>

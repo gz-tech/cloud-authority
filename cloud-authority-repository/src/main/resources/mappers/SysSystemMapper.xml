@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphone.cloudplatform.authority.mybatis.mapper.SysSystemMapper">
+    <select id="selectByCodeAndName"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysSystemPo">
+        SELECT
+        distinct  ss.id as id, ss.code as code, ss.name as name,
+        ss.description as description,sru.user_id as ownerUserId,"" as ownerName
+        FROM sys_system as ss
+        INNER JOIN sys_role_user as sru on ss.id = sru.system_id
+        <where>
+            <if test="code != null and code != ''">
+            ss.code LIKE CONCAT('%',#{code},'%')
+            </if>
+            <if test="name != null and name != ''">
+            AND ss.name LIKE CONCAT('%',#{name},'%')
+            </if>
+            AND ss.id = sru.system_id
+            AND sru.del_flag = 0
+            AND ss.del_flag = 0
+            AND sru.role_type = 1
+        </where>
+    </select>
+
+    <select id="selectByquery"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysSystemPo">
+        SELECT  *
+        from sys_system
+        <where>
+            AND id = #{id}
+            AND del_flag = 0
+        </where>
+        for update
+    </select>
+
+    <select id="selectOwnerIdById"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysSystemPo">
+    SELECT
+    distinct  ss.id as id, ss.code as code, ss.name as name,
+    ss.description as description,sru.user_id as ownerUserId,"" as ownerName
+    FROM sys_system as ss
+    INNER JOIN sys_role_user as sru on ss.id = sru.system_id
+    <where>
+        ss.id = #{id}
+        AND ss.id = sru.system_id
+        AND sru.del_flag = 0
+        AND ss.del_flag = 0
+        AND sru.role_type = 1
+    </where>
+</select>
+
+    <select id="selectbasicQuery"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.SysSystemPo">
+        SELECT
+        distinct  ss.id as id, ss.code as code, ss.name as name,
+        ss.description as description,sru.user_id as ownerUserId,"" as ownerName
+        FROM sys_system as ss
+        INNER JOIN sys_role_user as sru on ss.id = sru.system_id
+        <where>
+            ss.id = #{systemId}
+            AND ss.id = sru.system_id
+            AND sru.del_flag = 0
+            AND ss.del_flag = 0
+            AND sru.role_type = 1
+        </where>
+    </select>
+
+
+</mapper>

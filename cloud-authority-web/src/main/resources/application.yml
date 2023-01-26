@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: cloud-authority
+
+mybatis-plus:
+  mapper-locations: classpath*:mappers/*.xml
+  #指定Mybatis的实体目录
+  type-aliases-package: com.upuphone.cloudplatform.authority.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 全局逻辑删除的实体字段名 (since 3.3.0, 配置后可以忽略 @TableLogic 中的配置)
+      logic-delete-field: delFlag
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: UNIX_TIMESTAMP()
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0

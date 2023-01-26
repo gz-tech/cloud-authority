@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cloud-authority</artifactId>
+        <groupId>com.upuphone.cloudplatform</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-authority-business</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.upuphone.cloudplatform</groupId>
+            <artifactId>cloud-authority-admin-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.upuphone.cloudplatform</groupId>
+            <artifactId>cloud-authority-repository</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.upuphone.cloudplatform</groupId>
+            <artifactId>cloud-authority-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.upuphone.cloudplatform</groupId>
+            <artifactId>cloud-apollo-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.upuphone.cloudplatform</groupId>
+            <artifactId>cloud-redis-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.upuphone.cloudplatform</groupId>
+            <artifactId>cloud-authority-open-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.upuphone.cloudplatform</groupId>
+            <artifactId>cloud-internal-admin-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

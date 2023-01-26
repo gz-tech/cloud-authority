@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphone.cloudplatform.authority.mybatis.mapper.BizPermissionMapper">
+
+    <select id="getBizUserPermissionDetailsByUserIdAndSystemId"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.po.bizuser.BizUserPermissionDetailPo">
+        select brp.id, br.code, br.res_type, br.description, br.path, bp.action
+        from biz_role_user bru
+                 inner join biz_role_permission brp on bru.role_id = brp.role_id
+                 inner join biz_permission bp on brp.permission_id = bp.id
+                 inner join biz_resource br on bp.res_id = br.id
+        where bru.user_id = #{userId}
+          and br.system_id = #{systemId}
+          and bru.del_flag = 0
+          and brp.del_flag = 0
+          and bp.del_flag = 0
+          and br.del_flag = 0
+    </select>
+
+    <select id="getAllPermissionListBySystemId"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.po.bizpermission.BizPermissionListPo">
+        SELECT p.id       AS id,
+               p.`action` AS `action`,
+               r.code     AS resourceName
+        FROM biz_permission p
+        INNER JOIN biz_resource r ON p.res_id = r.id
+        WHERE r.system_id = #{systemId, jdbcType = BIGINT}
+        AND p.del_flag = 0
+        AND r.del_flag = 0
+    </select>
+
+    <select id="getPermissionByRoleId"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.po.bizpermission.BizPermissionListPo">
+        select bp.id           as id,
+               bp.`action`     as `action`,
+               brc.code        as resourceName,
+               brc.description as resourceDescp,
+               brc.path        as resourcePath,
+               brc.res_type    as resourceType
+        from biz_permission bp
+                 inner join biz_role_permission brp on bp.id = brp.permission_id
+                 inner join biz_resource brc on brc.id = bp.res_id
+        where brp.role_id = #{roleId, jdbcType = BIGINT}
+          and brp.del_flag = 0
+          and brc.del_flag = 0
+    </select>
+
+
+    <select id="getPermtResIdByRole" resultType="java.lang.Long">
+        SELECT distinct perm.res_id as resId
+        FROM biz_permission as perm
+        left join biz_role_permission as role_perm
+        on perm.id = role_perm.permission_id
+        <where>
+            role_perm.role_id in
+            <foreach collection="roleIds" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+            AND perm.`action`= #{actionType}
+            AND perm.del_flag = 0
+            AND role_perm.del_flag = 0
+        </where>
+    </select>
+</mapper>

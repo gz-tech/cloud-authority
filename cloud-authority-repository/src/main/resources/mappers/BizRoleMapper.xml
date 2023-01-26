@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphone.cloudplatform.authority.mybatis.mapper.BizRoleMapper">
+
+    <select id="getBizUserRoleDetailsByUserIdAndSystemId"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.po.bizuser.BizUserRoleDetailPo">
+        select bru.id, bru.user_id, br.code, br.description, br.system_id, bru.create_time from biz_role br
+            inner join biz_role_user bru on br.id = bru.role_id
+        where bru.user_id = #{userId}
+          and br.system_id = #{systemId}
+        and br.del_flag = 0
+        and bru.del_flag = 0
+    </select>
+    <select id="getByCodeAndSystemIdForUpdate"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.BizRolePo">
+        select * from biz_role
+        where code = #{code}
+        and system_id = #{systemId}
+        and del_flag = 0
+        for update
+    </select>
+    <select id="getByIdAndSystemIdForUpdate"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.BizRolePo">
+        select * from biz_role
+        where id = #{roleId}
+        and system_id = #{systemId}
+        and del_flag = 0
+        for update
+    </select>
+    <select id="getByIdsAndSystemIdForUpdate"
+            resultType="com.upuphone.cloudplatform.authority.mybatis.entity.BizRolePo">
+        select * from biz_role
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        and system_id = #{systemId}
+        and del_flag = 0
+        for update
+    </select>
+</mapper>
